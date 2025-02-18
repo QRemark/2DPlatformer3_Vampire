@@ -1,0 +1,1 @@
+public class MedicineChestPool : Pool<MedicineChest> { }
