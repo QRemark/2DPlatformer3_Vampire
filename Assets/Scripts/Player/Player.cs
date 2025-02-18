@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(UserInput), typeof(PlayerMover), typeof(PlayerWeapon))]
 [RequireComponent(typeof(PlayerAnimation), typeof(GroundDetector), typeof(Collector))]
+[RequireComponent(typeof(VampireAbility))]
 public class Player : MonoBehaviour, ITargetable
 {
     [SerializeField] private PlayerMover _playerMover;
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour, ITargetable
     [SerializeField] private UserInput _userInput;
     [SerializeField] private GroundDetector _groundDetector;
     [SerializeField] private PlayerWeapon _weapon;
+    [SerializeField] private VampireAbility _ability;
 
     public Transform Transform => transform;
 
@@ -20,7 +22,7 @@ public class Player : MonoBehaviour, ITargetable
     private bool _jumpRequest;
     private bool _isMoving;
     private bool _isShooting;
-    private bool _isCooldown = false;
+    private bool _isShootingCooldown = false;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour, ITargetable
         _userInput.Moved += HandleMove;
         _userInput.Raced += HandleRun;
         _userInput.Fired += HandleFire;
+        _userInput.Consumed += HandleConsume;
     }
 
     private void Update()
@@ -71,11 +74,28 @@ public class Player : MonoBehaviour, ITargetable
         {
             _isShooting=true;
             _weapon.TryShoot(out bool isCooldown);
-            _isCooldown=isCooldown;
+            _isShootingCooldown=isCooldown;
         }
         else
             _isShooting = false;
     }
+    //private void HandleConsume()
+    //{
+    //    if (!_ability.IsOnCooldown)
+    //    {
+    //        _ability.TryConsume();
+    //    }
+    //}
+
+    private void HandleConsume()
+    {
+        if (_ability.IsOnCooldown == false)
+        {
+            _ability.TryConsume();
+        }
+    }
+
+
 
     private void HandleJump()
     {
@@ -104,7 +124,7 @@ public class Player : MonoBehaviour, ITargetable
 
     private void UpdateAnimation()
     {
-        if (_isShooting == true && _isCooldown == false)
+        if (_isShooting == true && _isShootingCooldown == false)
         {
             UpdateShoot(); 
             return; 
