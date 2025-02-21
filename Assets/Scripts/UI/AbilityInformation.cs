@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Information : MonoBehaviour
+public class AbilityInformation : MonoBehaviour
 {
     [SerializeField] private TMP_Text Text;
 

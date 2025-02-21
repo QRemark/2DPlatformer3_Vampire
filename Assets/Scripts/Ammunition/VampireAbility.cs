@@ -4,6 +4,8 @@ using UnityEngine;
 public class VampireAbility : MonoBehaviour
 {
     [SerializeField] private CircleCollider2D _radius;
+    [SerializeField] private VampireAbilityBar _abilityBar;
+    [SerializeField] private VampireAbilityAnimation _abilityAnimation;
 
     private Transform _playerTransform;
     private PlayerHealthContainer _playerHealth;
@@ -22,29 +24,19 @@ public class VampireAbility : MonoBehaviour
         _playerHealth = GetComponentInParent<PlayerHealthContainer>();
     }
 
-    //public void TryConsume()
-    //{
-    //    if (_isOnCooldown)
-    //    {
-    //        _isOnCooldown = true;
-    //        Debug.Log("cooldown on");
-    //        return;
-    //    }
-
-    //    _isOnCooldown = false;
-    //    Debug.Log("cooldown offfffffffffff");
-    //    StartCoroutine(ActiveVampirism());
-    //}
-
     public void TryConsume()
     {
-        if (_isOnCooldown) return;
+        if (_isOnCooldown) 
+            return;
+
         StartCoroutine(ActiveVampirism());
     }
 
     private IEnumerator ActiveVampirism()
     {
         _isOnCooldown = true;
+        _abilityBar.StartVampireBar(_workTime);
+        _abilityAnimation.PlayVampireAbilityAnimation();
 
         float elapsedTime = 0f;
 
@@ -52,33 +44,44 @@ public class VampireAbility : MonoBehaviour
         {
             ConsumeHealth();
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
 
-        //_isOnCooldown = true;
+        _abilityAnimation.StopVampireAbilityAnimation();
+        _abilityBar?.StartVampireBarCooldown(_cooldown);
+
         yield return new WaitForSeconds(_cooldown);
         _isOnCooldown = false;
     }
 
     private void ConsumeHealth()
     {
-        float range = _radius.bounds.extents.x;
+        EnemyHealthContainer nearestEnemy = FindNearestEnemy();
 
+        if (nearestEnemy != null && nearestEnemy.CurrentHealth > 0)
+        {
+            TransferHealth(nearestEnemy);
+        }
+    }
+
+    private EnemyHealthContainer FindNearestEnemy()
+    {
+        float range = _radius.bounds.extents.x;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerTransform.position, range);
 
         EnemyHealthContainer nearestEnemy = null;
-
         float minDistance = Mathf.Infinity;
 
-        foreach(Collider2D collider in colliders)
+        foreach (Collider2D collider in colliders)
         {
             EnemyHealthContainer enemy = collider.GetComponentInParent<EnemyHealthContainer>();
 
-            if(enemy != null)
+            if (enemy != null)
             {
                 float distance = Vector2.Distance(_playerTransform.position, collider.transform.position);
-                
-                if(distance < minDistance)
+
+                if (distance < minDistance)
                 {
                     minDistance = distance;
                     nearestEnemy = enemy;
@@ -86,11 +89,14 @@ public class VampireAbility : MonoBehaviour
             }
         }
 
-        if(nearestEnemy != null)
-        {
-            nearestEnemy.Reduce(_damagePerSecond * Time.deltaTime);
+        return nearestEnemy;
+    }
 
-            _playerHealth?.Increase(_damagePerSecond * Time.deltaTime);
-        }
+    private void TransferHealth(EnemyHealthContainer enemy)
+    {
+        float actualDamage = Mathf.Min(_damagePerSecond * Time.deltaTime, enemy.CurrentHealth);
+
+        enemy.Reduce(actualDamage);
+        _playerHealth?.Increase(actualDamage);
     }
 }

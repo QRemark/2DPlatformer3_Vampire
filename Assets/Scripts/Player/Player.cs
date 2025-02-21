@@ -79,23 +79,12 @@ public class Player : MonoBehaviour, ITargetable
         else
             _isShooting = false;
     }
-    //private void HandleConsume()
-    //{
-    //    if (!_ability.IsOnCooldown)
-    //    {
-    //        _ability.TryConsume();
-    //    }
-    //}
-
+    
     private void HandleConsume()
     {
         if (_ability.IsOnCooldown == false)
-        {
             _ability.TryConsume();
-        }
     }
-
-
 
     private void HandleJump()
     {

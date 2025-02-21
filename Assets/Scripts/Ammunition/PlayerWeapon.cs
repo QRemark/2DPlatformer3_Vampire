@@ -34,21 +34,18 @@ public class PlayerWeapon : MonoBehaviour
     {
         Vector2 shootDirection = _playerTransform.right;
 
-        RaycastHit2D hit = Physics2D.Raycast(_shooterPoint.position, shootDirection, _range);
+        int layerMask = LayerMask.GetMask("Enemy");
+
+        RaycastHit2D hit = Physics2D.Raycast(_shooterPoint.position, shootDirection, _range, layerMask);
 
         if (hit.collider != null)
         {
-            CapsuleCollider2D capsuleCollider = hit.collider.GetComponent<CapsuleCollider2D>();
+            EnemyHealthContainer enemyHealth = hit.collider.GetComponentInParent<EnemyHealthContainer>();
 
-            if (capsuleCollider != null)
+            if (enemyHealth != null)
             {
-                EnemyHealthContainer enemyHealth = hit.collider.GetComponentInParent<EnemyHealthContainer>();
-                
-                if (enemyHealth != null)
-                {
-                    enemyHealth.Reduce(_damage);
-                }
-            }   
+                enemyHealth.Reduce(_damage);
+            }
         }
     }
 }
