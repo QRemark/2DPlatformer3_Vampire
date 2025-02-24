@@ -90,6 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4b462b7b7f8fd4fa8903db963d55a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetLayers:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1313172285897270149
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +599,7 @@ GameObject:
   - component: {fileID: 7172681657600178384}
   - component: {fileID: 7638791661891140577}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

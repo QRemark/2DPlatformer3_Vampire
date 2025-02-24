@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 625649990571523290}
   - component: {fileID: 1456088332199080581}
-  m_Layer: 0
-  m_Name: mini-heart_0
+  m_Layer: 7
+  m_Name: ChestSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1897633993358657973}
   - component: {fileID: 664448684296294171}
   - component: {fileID: 7067766939621046659}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MedicineChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}

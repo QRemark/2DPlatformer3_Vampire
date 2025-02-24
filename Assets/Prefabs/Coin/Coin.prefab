@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8619060196075044706}
   - component: {fileID: 2966604976128694902}
   - component: {fileID: 1216200216159066934}
-  m_Layer: 0
-  m_Name: shot-hit-1
+  m_Layer: 7
+  m_Name: CoinSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 2979402273698380607}
   - component: {fileID: 3220407377673678275}
   - component: {fileID: 8992506762876633188}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}

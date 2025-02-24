@@ -1,13 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private float _speed = 5.0f;
     [SerializeField] private float _minDistancePoint = 1.5f;
 
-    //private Player _player;
     private ITargetable _target;
     private Rigidbody2D _enemyBody;
 
@@ -31,7 +29,6 @@ public class EnemyMover : MonoBehaviour
 
     private void Update()
     {
-        //if (_isPlayerInSight && _player != null)
         if (_isPlayerInSight && _target != null)
             MoveToPlayer();
         else
@@ -44,10 +41,6 @@ public class EnemyMover : MonoBehaviour
         _currentPointIndex = 0;
         transform.position = _currentPath.Points[_currentPointIndex].position;
     }
-
-    //public Player GetPlayer() => _player;
-
-    //public void SetPlayer(Player target) => _player = target;
 
     public ITargetable GetPlayer() => _target;
 
@@ -87,7 +80,6 @@ public class EnemyMover : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        //Vector2 direction = ((Vector2)_player.transform.position - (Vector2)transform.position).normalized;
         Vector2 direction = ((Vector2)_target.Transform.position - (Vector2)transform.position).normalized;
         _enemyBody.velocity = direction * _speed * _enemyRun;
     }

@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class VampireAbility : MonoBehaviour
 {
-    [SerializeField] private CircleCollider2D _radius;
+    [SerializeField] private EnemyScanner _enemyScanner;
     [SerializeField] private VampireAbilityBar _abilityBar;
     [SerializeField] private VampireAbilityAnimation _abilityAnimation;
 
-    private Transform _playerTransform;
     private PlayerHealthContainer _playerHealth;
 
     private float _damagePerSecond = 3f;
@@ -16,12 +15,14 @@ public class VampireAbility : MonoBehaviour
 
     private bool _isOnCooldown = false;
 
+    private WaitForSeconds _waitCooldown;
+
     public bool IsOnCooldown => _isOnCooldown;
 
     private void Awake()
     {
-        _playerTransform = transform;
         _playerHealth = GetComponentInParent<PlayerHealthContainer>();
+        _waitCooldown = new WaitForSeconds(_cooldown);
     }
 
     public void TryConsume()
@@ -51,45 +52,18 @@ public class VampireAbility : MonoBehaviour
         _abilityAnimation.StopVampireAbilityAnimation();
         _abilityBar?.StartVampireBarCooldown(_cooldown);
 
-        yield return new WaitForSeconds(_cooldown);
+        yield return _waitCooldown;
         _isOnCooldown = false;
     }
 
     private void ConsumeHealth()
     {
-        EnemyHealthContainer nearestEnemy = FindNearestEnemy();
+        EnemyHealthContainer nearestEnemy = _enemyScanner.GetNearestEnemy(transform.position);
 
-        if (nearestEnemy != null && nearestEnemy.CurrentHealth > 0)
+        if (nearestEnemy != null)
         {
             TransferHealth(nearestEnemy);
         }
-    }
-
-    private EnemyHealthContainer FindNearestEnemy()
-    {
-        float range = _radius.bounds.extents.x;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerTransform.position, range);
-
-        EnemyHealthContainer nearestEnemy = null;
-        float minDistance = Mathf.Infinity;
-
-        foreach (Collider2D collider in colliders)
-        {
-            EnemyHealthContainer enemy = collider.GetComponentInParent<EnemyHealthContainer>();
-
-            if (enemy != null)
-            {
-                float distance = Vector2.Distance(_playerTransform.position, collider.transform.position);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestEnemy = enemy;
-                }
-            }
-        }
-
-        return nearestEnemy;
     }
 
     private void TransferHealth(EnemyHealthContainer enemy)

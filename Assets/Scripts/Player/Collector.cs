@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Wallet), typeof(PlayerHealthContainer))]
 public class Collector : MonoBehaviour
 {
+    [SerializeField] private LayerMask _collectibleLayers;
+
     private Wallet _wallet;
     private PlayerHealthContainer _healthContainer;
 
@@ -14,7 +16,11 @@ public class Collector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent<ICollectible>(out var collectible)) //var
+        if (((1 << collision.gameObject.layer) & _collectibleLayers) == 0)
+            return;
+
+
+        if (collision.TryGetComponent<ICollectible>(out var collectible))
         {
             collectible.Collect();
 

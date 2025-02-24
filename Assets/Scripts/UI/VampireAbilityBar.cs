@@ -6,6 +6,8 @@ public class VampireAbilityBar : MonoBehaviour
 {
     [SerializeField] private Slider _abilityBar;
 
+    private Coroutine _fillCoroutine;
+
     private float _startPosition = 1f;
     private float _endPosition = 0f;
 
@@ -17,14 +19,18 @@ public class VampireAbilityBar : MonoBehaviour
 
     public void StartVampireBar(float duration)
     {
-        StopAllCoroutines();
-        StartCoroutine(ChangeFill(duration, _startPosition, _endPosition));
+        if (_fillCoroutine != null)
+            StopCoroutine(_fillCoroutine);
+
+        _fillCoroutine = StartCoroutine(ChangeFill(duration, _startPosition, _endPosition));
     }
 
     public void StartVampireBarCooldown(float cooldown)
     {
-        StopAllCoroutines();
-        StartCoroutine(ChangeFill(cooldown, _endPosition, _startPosition));
+        if (_fillCoroutine != null)
+            StopCoroutine(_fillCoroutine);
+
+        _fillCoroutine = StartCoroutine(ChangeFill(cooldown, _endPosition, _startPosition));
     }
 
     private IEnumerator ChangeFill(float time, float startPosition, float endPosition)
