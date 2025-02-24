@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 58495684}
   - component: {fileID: 58495685}
   - component: {fileID: 58495686}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,6 +405,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d252af7338a1047b9b5296037e7379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &58495680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70e77dce6fbaf441b15cd3836a3f035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collectibleLayers:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &58495681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6183dd32f2531bc4788313c57ad87529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: {fileID: 1264031233}
+  _enemyScanner: {fileID: 1264031235}
   _abilityBar: {fileID: 1369356619}
   _abilityAnimation: {fileID: 1264031234}
 --- !u!1 &147552032
@@ -2973,6 +2979,7 @@ GameObject:
   - component: {fileID: 1264031232}
   - component: {fileID: 1264031233}
   - component: {fileID: 1264031234}
+  - component: {fileID: 1264031235}
   m_Layer: 0
   m_Name: VampireCircle
   m_TagString: Untagged
@@ -3044,6 +3051,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _abilitySprite: {fileID: 1776315752}
+--- !u!114 &1264031235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264031231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d95eab817e45ef4982827d3c6be69d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1280382341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4835,7 +4857,7 @@ GameObject:
   - component: {fileID: 2005279817}
   - component: {fileID: 2005279820}
   - component: {fileID: 2005279821}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
