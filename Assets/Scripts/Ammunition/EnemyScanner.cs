@@ -14,7 +14,7 @@ public class EnemyScanner : MonoBehaviour
 
         foreach (EnemyHealthContainer enemy in _enemiesInRadius)
         {
-            if (enemy != null && enemy.CurrentHealth > 0)
+            if (enemy != null && enemy.Current > 0)
             {
                 if (position.IsCloserThan(enemy.transform.position, minDistance))
                 {

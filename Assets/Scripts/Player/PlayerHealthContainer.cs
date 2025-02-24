@@ -2,6 +2,6 @@ public class PlayerHealthContainer : HealthContainer
 {
     private void Awake()
     {
-        _maxHealth = 145; 
+        _max = 145; 
     }
 }

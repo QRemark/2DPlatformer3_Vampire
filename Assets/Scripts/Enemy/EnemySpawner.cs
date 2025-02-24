@@ -6,7 +6,6 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private Enemy _prefab;
     [SerializeField] private List<EnemyPath> _enemyPaths;
-    //[SerializeField] private Player _palyerTarget;
 
     [SerializeField] private MonoBehaviour _playerTarget;
 
@@ -21,7 +20,6 @@ public class EnemySpawner : MonoBehaviour
     {
         _enemyPool = gameObject.GetComponent<EnemyPool>();
         _enemyPool.Initialize(_prefab, _poolCapacity);
-        //_target = _playerTarget as ITargetable;
         _target = _playerTarget.GetComponent<ITargetable>();
     }
 
@@ -40,7 +38,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 enemy.SetPath(_enemyPaths[i]);
                 enemy.transform.position = _enemyPaths[i].Points[_startPoint].position;
-                //enemy.SetPlayerTarget(_palyerTarget);
                 enemy.SetPlayerTarget(_target);
             }
         }

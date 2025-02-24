@@ -5,7 +5,9 @@ public class PercentHealthbar : MonoBehaviour
 {
     [SerializeField] private Slider _percentHealthbar;
 
-    private IHealthContainer _healthContainer; 
+    private IHealthContainer _healthContainer;
+
+    private float MaxHealth => _healthContainer.Max;
 
     private void Start()
     {
@@ -13,18 +15,19 @@ public class PercentHealthbar : MonoBehaviour
 
         if (_healthContainer != null)
         {
-            _healthContainer.HealthChanged += UpdatePercentHealthbar;
-            UpdatePercentHealthbar(_healthContainer.CurrentHealth, _healthContainer.MaxHealth);
+            _healthContainer.Changed += UpdatePercentHealthbar;
+            UpdatePercentHealthbar(_healthContainer.Current);
         }
     }
 
     private void OnDestroy()
     {
-        _healthContainer.HealthChanged -= UpdatePercentHealthbar;
+        if (_healthContainer != null)
+            _healthContainer.Changed -= UpdatePercentHealthbar;
     }
 
-    private void UpdatePercentHealthbar(float currentHealth, float maxHealth)
+    private void UpdatePercentHealthbar(float currentHealth)
     {
-        _percentHealthbar.value = currentHealth / maxHealth;
+        _percentHealthbar.value = currentHealth / MaxHealth;
     }
 }

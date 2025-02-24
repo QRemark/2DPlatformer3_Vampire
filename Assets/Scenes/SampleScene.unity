@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 58495684}
   - component: {fileID: 58495685}
   - component: {fileID: 58495686}
+  - component: {fileID: 58495687}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -354,6 +355,7 @@ MonoBehaviour:
   _groundDetector: {fileID: 58495679}
   _weapon: {fileID: 58495684}
   _ability: {fileID: 58495686}
+  _rotator: {fileID: 58495687}
 --- !u!114 &58495676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,6 +479,18 @@ MonoBehaviour:
   _enemyScanner: {fileID: 1264031235}
   _abilityBar: {fileID: 1369356619}
   _abilityAnimation: {fileID: 1264031234}
+--- !u!114 &58495687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58495669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7fc098540fc3de41a5b6807dd076ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &147552032
 GameObject:
   m_ObjectHideFlags: 0

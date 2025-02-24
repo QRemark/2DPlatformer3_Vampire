@@ -8,25 +8,28 @@ public class GradualHealthbar : MonoBehaviour
 
     private IHealthContainer _healthContainer;
 
+    private float MaxHealth => _healthContainer.Max;
+
     private void Start()
     {
         _healthContainer = GetComponentInParent<IHealthContainer>();
 
         if (_healthContainer != null)
         {
-            _healthContainer.HealthChanged += UpdateGradualHealthbar;
-            UpdateGradualHealthbar(_healthContainer.CurrentHealth, _healthContainer.MaxHealth);
+            _healthContainer.Changed += UpdateGradualHealthbar;
+            UpdateGradualHealthbar(_healthContainer.Current);
         }
     }
 
     private void OnDestroy()
     {
-        _healthContainer.HealthChanged -= UpdateGradualHealthbar;
+        if (_healthContainer != null)
+            _healthContainer.Changed -= UpdateGradualHealthbar;
     }
 
-    private void UpdateGradualHealthbar(float currentHealth, float maxHealth)
+    private void UpdateGradualHealthbar(float currentHealth)
     {
-        float targetValue = currentHealth / maxHealth;
+        float targetValue = currentHealth / MaxHealth;
         StopAllCoroutines();
         StartCoroutine(SmoothHealthChange(targetValue));
     }

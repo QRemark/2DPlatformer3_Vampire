@@ -2,10 +2,10 @@ using System;
 
 public interface IHealthContainer
 {
-    public float MaxHealth { get; }
-    public float CurrentHealth { get; }
+    public float Max { get; }
+    public float Current { get; }
 
-    public event Action<float, float> HealthChanged;
+    public event Action<float> Changed;
 
     public void Increase(float volume);
 

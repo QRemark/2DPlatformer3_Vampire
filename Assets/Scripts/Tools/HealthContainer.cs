@@ -3,29 +3,29 @@ using UnityEngine;
 
 public abstract class HealthContainer : MonoBehaviour, IHealthContainer
 {
-    protected float _maxHealth;
-    private float _currentHealth;
+    protected float _max;
+    private float _current;
 
-    public event Action<float,float> HealthChanged;
+    public event Action<float> Changed;
 
-    public float MaxHealth => _maxHealth;
-    public float CurrentHealth => _currentHealth;
+    public float Max => _max;
+    public float Current => _current;
 
     protected virtual void Start()
     {
-        _currentHealth = _maxHealth;
-        HealthChanged?.Invoke(_currentHealth, _maxHealth);
+        _current = _max;
+        Changed?.Invoke(_current);
     }
 
     public void Increase(float volume)
     {
-        _currentHealth = Mathf.Clamp(_currentHealth + volume, 0, _maxHealth);
-        HealthChanged?.Invoke(_currentHealth, _maxHealth);
+        _current = Mathf.Clamp(_current + volume, 0, _max);
+        Changed?.Invoke(_current);
     }
 
     public void Reduce(float volume)
     {
-        _currentHealth = Mathf.Clamp(_currentHealth - volume, 0, _maxHealth);
-        HealthChanged?.Invoke(_currentHealth, _maxHealth);
+        _current = Mathf.Clamp(_current - volume, 0, _max);
+        Changed?.Invoke(_current);
     }
 }

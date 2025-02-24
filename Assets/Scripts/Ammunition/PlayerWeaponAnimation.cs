@@ -9,6 +9,7 @@ public class PlayerWeaponAnimation : MonoBehaviour
     private float _laserAnimationTime = 0.5f;
     private float _laserVision = 0.1f;
     private float _laserHalfTime = 2.0f;
+    private float _timeDivider = 2;
 
     private Vector3 _laserScale = new Vector3(2f, 3f, 1f);
 
@@ -30,7 +31,7 @@ public class PlayerWeaponAnimation : MonoBehaviour
 
         float elapsedTime = 0.0f;
 
-        while (elapsedTime < _laserAnimationTime / 2)
+        while (elapsedTime < _laserAnimationTime / _timeDivider)
         {
             elapsedTime += Time.deltaTime;
             float scale = Mathf.Lerp(0f, _laserScale.y, elapsedTime/ (_laserAnimationTime / _laserHalfTime));
@@ -43,7 +44,7 @@ public class PlayerWeaponAnimation : MonoBehaviour
 
         elapsedTime = 0.0f;
         
-        while(elapsedTime<_laserAnimationTime / 2)
+        while(elapsedTime<_laserAnimationTime / _timeDivider)
         {
             elapsedTime += Time.deltaTime;
             float scale = Mathf.Lerp(_laserScale.y, 0f, elapsedTime / (_laserAnimationTime / _laserHalfTime));

@@ -7,24 +7,27 @@ public class TextHealthbar : MonoBehaviour
 
     private IHealthContainer _healthContainer;
 
+    private float MaxHealth => _healthContainer.Max;
+
     private void Start()
     {
         _healthContainer = GetComponentInParent<IHealthContainer>();
 
         if (_healthContainer != null)
         {
-            _healthContainer.HealthChanged += UpdateHealthText;
-            UpdateHealthText(_healthContainer.CurrentHealth, _healthContainer.MaxHealth);
+            _healthContainer.Changed += UpdateHealthText;
+            UpdateHealthText(_healthContainer.Current);
         }
     }
 
     private void OnDestroy()
     {
-        _healthContainer.HealthChanged -= UpdateHealthText;
+        if (_healthContainer != null)
+            _healthContainer.Changed -= UpdateHealthText;
     }
 
-    private void UpdateHealthText(float currentHealth, float maxHealth)
+    private void UpdateHealthText(float currentHealth)
     {
-        _healthText.text = $"{currentHealth} / {maxHealth}";
+        _healthText.text = $"{currentHealth} / {MaxHealth}";
     }
 }

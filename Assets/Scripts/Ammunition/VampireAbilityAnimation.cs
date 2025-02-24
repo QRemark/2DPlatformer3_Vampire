@@ -6,7 +6,7 @@ public class VampireAbilityAnimation : MonoBehaviour
 
     private void Awake()
     {
-        _abilitySprite.enabled = false;
+        StopVampireAbilityAnimation();
     }
 
     public void PlayVampireAbilityAnimation()

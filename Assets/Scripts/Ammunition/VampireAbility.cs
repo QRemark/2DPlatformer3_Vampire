@@ -68,7 +68,7 @@ public class VampireAbility : MonoBehaviour
 
     private void TransferHealth(EnemyHealthContainer enemy)
     {
-        float actualDamage = Mathf.Min(_damagePerSecond * Time.deltaTime, enemy.CurrentHealth);
+        float actualDamage = Mathf.Min(_damagePerSecond * Time.deltaTime, enemy.Current);
 
         enemy.Reduce(actualDamage);
         _playerHealth?.Increase(actualDamage);
